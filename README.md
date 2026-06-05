@@ -32,9 +32,9 @@ And that's it! The extension will be active immediately in your browser.
 
 ---
 
-## 🛠️ How to package the extension (For Developers)
+## 🛠️ How to package the extension
 
-If you are the creator and want to compile/package the extension into a single clean `.zip` file (without development files like `.git` or scripts) to send to your friends or users:
+If you want to package it on your own and want to package the extension into a single clean `.zip` file (without development files like `.git` or scripts) to send to your friends or users:
 
 1. Open the terminal in the project folder.
 2. Run the packaging script:
