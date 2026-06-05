@@ -1,0 +1,86 @@
+{
+    "extName": {
+        "message": "Everything Michiru"
+    },
+    "extDesc": {
+        "message": "Replaces every image with pictures of Michiru Kagemori!"
+    },
+    "bodyText": {
+        "message": "This extension replaces all images on the internet with photos of Michiru Kagemori. You can enable or disable it at any time!"
+    },
+    "statusLabel": {
+        "message": "Status"
+    },
+    "statusActive": {
+        "message": "Active"
+    },
+    "statusInactive": {
+        "message": "Inactive"
+    },
+    "statusLoading": {
+        "message": "Loading..."
+    },
+    "btnTurnOn": {
+        "message": "ON"
+    },
+    "btnTurnOff": {
+        "message": "OFF"
+    },
+    "apisToggleLabel": {
+        "message": "Use API images"
+    },
+    "settingsToggle": {
+        "message": "⚙️ API Settings"
+    },
+    "danbooruLoginLabel": {
+        "message": "Danbooru Login"
+    },
+    "danbooruLoginPlaceholder": {
+        "message": "e.g. CarlosGamer98YT"
+    },
+    "danbooruApiKeyLabel": {
+        "message": "Danbooru API Key"
+    },
+    "danbooruApiKeyPlaceholder": {
+        "message": "API Key"
+    },
+    "gelbooruUserIdLabel": {
+        "message": "Gelbooru User ID"
+    },
+    "gelbooruUserIdPlaceholder": {
+        "message": "e.g. 1988224"
+    },
+    "gelbooruApiKeyLabel": {
+        "message": "Gelbooru API Key"
+    },
+    "gelbooruApiKeyPlaceholder": {
+        "message": "API Key"
+    },
+    "btnSaveSettings": {
+        "message": "Save Settings"
+    },
+    "settingsSaved": {
+        "message": "Configuration saved!"
+    },
+    "settingsQuerying": {
+        "message": "Saved! Querying APIs..."
+    },
+    "settingsSuccess": {
+        "message": "Success! $COUNT$ images ready.",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            }
+        }
+    },
+    "settingsFetching": {
+        "message": "Connection ready. (Loading images in background...)"
+    },
+    "madeWith": {
+        "message": "Made with ❤️ by Yuwukii"
+    },
+    "modifiedBy": {
+        "message": "Modified by CarlosGamer98YT"
+    }
+}

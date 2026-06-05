@@ -25,19 +25,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // Detectar si estamos en el contexto real de la extensión de Chrome/Brave
     const isExtensionContext = typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local;
 
+    // Función para traducir los elementos HTML estáticos con atributos data-i18n y data-i18n-placeholder
+    const translateHTML = () => {
+        if (!isExtensionContext) return;
+        
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            const message = chrome.i18n.getMessage(key);
+            if (message) {
+                element.textContent = message;
+            }
+        });
+
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+            const key = element.getAttribute('data-i18n-placeholder');
+            const message = chrome.i18n.getMessage(key);
+            if (message) {
+                element.placeholder = message;
+            }
+        });
+    };
+
+    // Traducir la interfaz inmediatamente
+    translateHTML();
+
     // Función para actualizar la interfaz del popup basada en el estado de la extensión
     const updateUI = (enabled) => {
         if (enabled) {
             statusDot.className = 'status-dot active';
-            statusText.textContent = 'Activado';
+            statusText.textContent = isExtensionContext ? chrome.i18n.getMessage('statusActive') : 'Activado';
             
-            btnToggle.textContent = 'OFF';
+            btnToggle.textContent = isExtensionContext ? chrome.i18n.getMessage('btnTurnOff') : 'OFF';
             btnToggle.className = 'btn btn-active'; // Estilo rojo (para desactivar)
         } else {
             statusDot.className = 'status-dot inactive';
-            statusText.textContent = 'Desactivado';
+            statusText.textContent = isExtensionContext ? chrome.i18n.getMessage('statusInactive') : 'Desactivado';
             
-            btnToggle.textContent = 'ON';
+            btnToggle.textContent = isExtensionContext ? chrome.i18n.getMessage('btnTurnOn') : 'ON';
             btnToggle.className = 'btn btn-inactive'; // Estilo verde (para activar)
         }
     };
@@ -151,16 +175,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 gelbooruUserId,
                 gelbooruApiKey
             }, () => {
-                showMessage('¡Configuración guardada!', 'success');
+                const savedMsg = isExtensionContext ? chrome.i18n.getMessage('settingsSaved') : '¡Configuración guardada!';
+                showMessage(savedMsg, 'success');
                 
                 // Si las APIs están habilitadas y hay credenciales, solicitar al background que refresque
                 if (apisEnabled && ((danbooruLogin && danbooruApiKey) || (gelbooruUserId && gelbooruApiKey))) {
-                    showMessage('¡Guardado! Consultando APIs...', 'success');
+                    const queryingMsg = isExtensionContext ? chrome.i18n.getMessage('settingsQuerying') : '¡Guardado! Consultando APIs...';
+                    showMessage(queryingMsg, 'success');
                     chrome.runtime.sendMessage({ action: 'fetchImageBoards' }, (response) => {
                         if (response && response.urls && response.urls.length > 0) {
-                            showMessage(`¡Éxito! ${response.urls.length} imágenes listas.`, 'success');
+                            const countStr = response.urls.length.toString();
+                            const successMsg = isExtensionContext ? chrome.i18n.getMessage('settingsSuccess', [countStr]) : `¡Éxito! ${countStr} imágenes listas.`;
+                            showMessage(successMsg, 'success');
                         } else {
-                            showMessage('Conexión lista. (Cargando imágenes en segundo plano...)', 'success');
+                            const fetchingMsg = isExtensionContext ? chrome.i18n.getMessage('settingsFetching') : 'Conexión lista. (Cargando imágenes en segundo plano...)';
+                            showMessage(fetchingMsg, 'success');
                         }
                     });
                 }

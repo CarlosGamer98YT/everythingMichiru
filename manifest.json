@@ -1,7 +1,8 @@
 {
-    "name": "Everything Michiru",
+    "name": "__MSG_extName__",
     "version": "1.0",
-    "description": "Replaces every image with pictures of Michiru Kagemori!",
+    "description": "__MSG_extDesc__",
+    "default_locale": "en",
     "content_scripts": [{
         "matches": ["<all_urls>"],
         "js": ["content.js"]

@@ -12,7 +12,7 @@
     <div class="header-container">
         <div class="flex-left">
             <img src="./icons/logo_128x128.png" alt="logo..." class="logo">
-            <h1>Everything Michiru</h1>
+            <h1 data-i18n="extName">Everything Michiru</h1>
         </div>
         <div class="nsfw-header-container">
             <span id="nsfw-label" class="nsfw-text-label sfw">SFW</span>
@@ -22,20 +22,20 @@
             </label>
         </div>
     </div>
-    <p class="text">Esta extensión reemplaza todas las imágenes de Internet por fotos de Michiru Kagemori. ¡Puedes activarla o desactivarla en cualquier momento!</p>
+    <p class="text" data-i18n="bodyText">Esta extensión reemplaza todas las imágenes de Internet por fotos de Michiru Kagemori. ¡Puedes activarla o desactivarla en cualquier momento!</p>
     
     <div class="status-container">
-        <span class="status-label">Estado</span>
+        <span class="status-label" data-i18n="statusLabel">Estado</span>
         <div class="status-value">
             <span id="status-dot" class="status-dot"></span>
-            <span id="status-text">Cargando...</span>
+            <span id="status-text" data-i18n="statusLoading">Cargando...</span>
         </div>
     </div>
 
     <button id="btn-toggle" class="btn">...</button>
 
     <div class="switch-group main-switch">
-        <span class="switch-label">Usar imágenes de APIs (Gel/Dan)</span>
+        <span class="switch-label" data-i18n="apisToggleLabel">Usar imágenes de APIs</span>
         <label class="switch">
             <input type="checkbox" id="apis-toggle">
             <span class="slider round"></span>
@@ -43,34 +43,34 @@
     </div>
 
     <div class="settings-toggle" id="settings-toggle">
-        <span>⚙️ Ajustes de API</span>
+        <span data-i18n="settingsToggle">⚙️ Ajustes de API</span>
         <span id="settings-arrow">▼</span>
     </div>
 
     <div class="settings-content" id="settings-content">
         <div class="input-group">
-            <label>Danbooru Login</label>
-            <input type="text" id="danbooru-login" placeholder="Ej: CarlosGamer98YT">
+            <label data-i18n="danbooruLoginLabel">Danbooru Login</label>
+            <input type="text" id="danbooru-login" placeholder="Ej: CarlosGamer98YT" data-i18n-placeholder="danbooruLoginPlaceholder">
         </div>
         <div class="input-group">
-            <label>Danbooru API Key</label>
-            <input type="password" id="danbooru-apikey" placeholder="API Key">
+            <label data-i18n="danbooruApiKeyLabel">Danbooru API Key</label>
+            <input type="password" id="danbooru-apikey" placeholder="API Key" data-i18n-placeholder="danbooruApiKeyPlaceholder">
         </div>
         <hr class="settings-divider">
         <div class="input-group">
-            <label>Gelbooru User ID</label>
-            <input type="text" id="gelbooru-userid" placeholder="Ej: 1988224">
+            <label data-i18n="gelbooruUserIdLabel">Gelbooru User ID</label>
+            <input type="text" id="gelbooru-userid" placeholder="Ej: 1988224" data-i18n-placeholder="gelbooruUserIdPlaceholder">
         </div>
         <div class="input-group">
-            <label>Gelbooru API Key</label>
-            <input type="password" id="gelbooru-apikey" placeholder="API Key">
+            <label data-i18n="gelbooruApiKeyLabel">Gelbooru API Key</label>
+            <input type="password" id="gelbooru-apikey" placeholder="API Key" data-i18n-placeholder="gelbooruApiKeyPlaceholder">
         </div>
-        <button id="btn-save-settings" class="btn btn-save">Guardar configuración</button>
+        <button id="btn-save-settings" class="btn btn-save" data-i18n="btnSaveSettings">Guardar configuración</button>
         <p id="settings-message" class="settings-message"></p>
     </div>
     
-    <p class="bottom">Hecho con ❤️ por Yuwukii</p>
-    <p class="credits">Modificado por CarlosGamer98YT</p>
+    <p class="bottom" data-i18n="madeWith">Hecho con ❤️ por Yuwukii</p>
+    <p class="credits" data-i18n="modifiedBy">Modificado por CarlosGamer98YT</p>
 
     <script src="popup.js"></script>
 </body>

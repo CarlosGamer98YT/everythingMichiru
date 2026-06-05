@@ -1,0 +1,86 @@
+{
+    "extName": {
+        "message": "Everything Michiru"
+    },
+    "extDesc": {
+        "message": "¡Reemplaza todas las imágenes por fotos de Michiru Kagemori!"
+    },
+    "bodyText": {
+        "message": "Esta extensión reemplaza todas las imágenes de Internet por fotos de Michiru Kagemori. ¡Puedes activarla o desactivarla en cualquier momento!"
+    },
+    "statusLabel": {
+        "message": "Estado"
+    },
+    "statusActive": {
+        "message": "Activado"
+    },
+    "statusInactive": {
+        "message": "Desactivado"
+    },
+    "statusLoading": {
+        "message": "Cargando..."
+    },
+    "btnTurnOn": {
+        "message": "ON"
+    },
+    "btnTurnOff": {
+        "message": "OFF"
+    },
+    "apisToggleLabel": {
+        "message": "Usar imágenes de APIs"
+    },
+    "settingsToggle": {
+        "message": "⚙️ Ajustes de API"
+    },
+    "danbooruLoginLabel": {
+        "message": "Danbooru Login"
+    },
+    "danbooruLoginPlaceholder": {
+        "message": "Ej: CarlosGamer98YT"
+    },
+    "danbooruApiKeyLabel": {
+        "message": "Danbooru API Key"
+    },
+    "danbooruApiKeyPlaceholder": {
+        "message": "API Key"
+    },
+    "gelbooruUserIdLabel": {
+        "message": "Gelbooru User ID"
+    },
+    "gelbooruUserIdPlaceholder": {
+        "message": "Ej: 1988224"
+    },
+    "gelbooruApiKeyLabel": {
+        "message": "Gelbooru API Key"
+    },
+    "gelbooruApiKeyPlaceholder": {
+        "message": "API Key"
+    },
+    "btnSaveSettings": {
+        "message": "Guardar configuración"
+    },
+    "settingsSaved": {
+        "message": "¡Configuración guardada!"
+    },
+    "settingsQuerying": {
+        "message": "¡Guardado! Consultando APIs..."
+    },
+    "settingsSuccess": {
+        "message": "¡Éxito! $COUNT$ imágenes listas.",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "15"
+            }
+        }
+    },
+    "settingsFetching": {
+        "message": "Conexión lista. (Cargando imágenes en segundo plano...)"
+    },
+    "madeWith": {
+        "message": "Hecho con ❤️ por Yuwukii"
+    },
+    "modifiedBy": {
+        "message": "Modificado por CarlosGamer98YT"
+    }
+}
