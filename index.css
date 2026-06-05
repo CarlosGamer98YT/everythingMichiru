@@ -151,3 +151,102 @@ h1 {
     text-align: center;
     font-weight: 800;
 }
+
+/* Settings section styling */
+.settings-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px 4px 6px 4px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #a89bbd;
+    cursor: pointer;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    transition: color 0.3s ease;
+}
+
+.settings-toggle:hover {
+    color: #bd93f9;
+}
+
+.settings-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.settings-content.open {
+    max-height: 420px; /* Suficiente espacio para los inputs */
+    margin-top: 10px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.input-group label {
+    font-size: 11px;
+    font-weight: 800;
+    color: #6272a4;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-group input {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #ffffff;
+    font-family: 'Rubik', sans-serif;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #bd93f9;
+    box-shadow: 0 0 8px rgba(189, 147, 249, 0.25);
+}
+
+.settings-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin: 14px 0;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #bd93f9 0%, #ff79c6 100%);
+    color: #0f0724;
+    padding: 10px;
+    font-size: 13px;
+    margin-top: 8px;
+    box-shadow: 0 4px 10px rgba(189, 147, 249, 0.2);
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, #ca9eff 0%, #ff92d0 100%);
+    box-shadow: 0 6px 15px rgba(189, 147, 249, 0.4);
+}
+
+.settings-message {
+    font-size: 11px;
+    text-align: center;
+    margin-top: 8px;
+    height: 14px;
+    font-weight: 800;
+    transition: color 0.3s ease;
+}
+
+.settings-message.success {
+    color: #50fa7b;
+}
+
+.settings-message.error {
+    color: #ff5555;
+}

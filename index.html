@@ -24,6 +24,33 @@
     </div>
 
     <button id="btn-toggle" class="btn">...</button>
+
+    <div class="settings-toggle" id="settings-toggle">
+        <span>⚙️ Ajustes de API</span>
+        <span id="settings-arrow">▼</span>
+    </div>
+
+    <div class="settings-content" id="settings-content">
+        <div class="input-group">
+            <label>Danbooru Login</label>
+            <input type="text" id="danbooru-login" placeholder="Ej: CarlosGamer98YT">
+        </div>
+        <div class="input-group">
+            <label>Danbooru API Key</label>
+            <input type="password" id="danbooru-apikey" placeholder="API Key">
+        </div>
+        <hr class="settings-divider">
+        <div class="input-group">
+            <label>Gelbooru User ID</label>
+            <input type="text" id="gelbooru-userid" placeholder="Ej: 1988224">
+        </div>
+        <div class="input-group">
+            <label>Gelbooru API Key</label>
+            <input type="password" id="gelbooru-apikey" placeholder="API Key">
+        </div>
+        <button id="btn-save-settings" class="btn btn-save">Guardar configuración</button>
+        <p id="settings-message" class="settings-message"></p>
+    </div>
     
     <p class="bottom">Hecho con ❤️ por Yuwukii</p>
     <p class="credits">Modificado por CarlosGamer98YT</p>

@@ -1,9 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Elementos principales
     const btnToggle = document.getElementById('btn-toggle');
     const statusDot = document.getElementById('status-dot');
     const statusText = document.getElementById('status-text');
 
-    // Función para actualizar la interfaz del popup basada en el estado
+    // Elementos de Configuración de API
+    const settingsToggle = document.getElementById('settings-toggle');
+    const settingsContent = document.getElementById('settings-content');
+    const settingsArrow = document.getElementById('settings-arrow');
+    
+    const danbooruLoginInput = document.getElementById('danbooru-login');
+    const danbooruApiKeyInput = document.getElementById('danbooru-apikey');
+    const gelbooruUserIdInput = document.getElementById('gelbooru-userid');
+    const gelbooruApiKeyInput = document.getElementById('gelbooru-apikey');
+    
+    const btnSaveSettings = document.getElementById('btn-save-settings');
+    const settingsMessage = document.getElementById('settings-message');
+
+    // Detectar si estamos en el contexto real de la extensión de Chrome/Brave
+    const isExtensionContext = typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local;
+
+    // Función para actualizar la interfaz del popup basada en el estado de la extensión
     const updateUI = (enabled) => {
         if (enabled) {
             statusDot.className = 'status-dot active';
@@ -20,32 +37,75 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Detectar si estamos en el contexto real de la extensión de Chrome/Brave
-    const isExtensionContext = typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local;
+    // --- 1. Alternar visualización de la sección de Ajustes ---
+    settingsToggle.addEventListener('click', () => {
+        const isOpen = settingsContent.classList.toggle('open');
+        settingsArrow.textContent = isOpen ? '▲' : '▼';
+    });
 
+    // --- 2. Cargar datos iniciales de configuración y estado ---
     if (isExtensionContext) {
-        // --- Contexto Real de la Extensión ---
-        // Obtener el estado actual (por defecto true si no existe)
-        chrome.storage.local.get({ enabled: true }, (result) => {
-            updateUI(result.enabled);
+        // Cargar estado ON/OFF
+        chrome.storage.local.get(['enabled'], (result) => {
+            updateUI(result.enabled !== false);
         });
 
-        // Manejar el click en el botón de alternar
+        // Cargar credenciales guardadas
+        chrome.storage.local.get([
+            'danbooruLogin',
+            'danbooruApiKey',
+            'gelbooruUserId',
+            'gelbooruApiKey'
+        ], (result) => {
+            if (result.danbooruLogin) danbooruLoginInput.value = result.danbooruLogin;
+            if (result.danbooruApiKey) danbooruApiKeyInput.value = result.danbooruApiKey;
+            if (result.gelbooruUserId) gelbooruUserIdInput.value = result.gelbooruUserId;
+            if (result.gelbooruApiKey) gelbooruApiKeyInput.value = result.gelbooruApiKey;
+        });
+
+        // Alternar estado ON/OFF al pulsar el botón principal
         btnToggle.addEventListener('click', () => {
-            chrome.storage.local.get({ enabled: true }, (result) => {
-                const newEnabled = !result.enabled;
-                
-                // Guardar el nuevo estado en el almacenamiento local
+            chrome.storage.local.get(['enabled'], (result) => {
+                const newEnabled = result.enabled === false; // Si era false (desactivado), ahora es true (activado)
                 chrome.storage.local.set({ enabled: newEnabled }, () => {
                     updateUI(newEnabled);
                 });
             });
         });
+
+        // Guardar la configuración de APIs
+        btnSaveSettings.addEventListener('click', () => {
+            const danbooruLogin = danbooruLoginInput.value.trim();
+            const danbooruApiKey = danbooruApiKeyInput.value.trim();
+            const gelbooruUserId = gelbooruUserIdInput.value.trim();
+            const gelbooruApiKey = gelbooruApiKeyInput.value.trim();
+
+            chrome.storage.local.set({
+                danbooruLogin,
+                danbooruApiKey,
+                gelbooruUserId,
+                gelbooruApiKey
+            }, () => {
+                showMessage('¡Configuración guardada!', 'success');
+                
+                // Si hay credenciales, solicitar al background que refresque los enlaces inmediatamente
+                if ((danbooruLogin && danbooruApiKey) || (gelbooruUserId && gelbooruApiKey)) {
+                    showMessage('¡Guardado! Consultando APIs...', 'success');
+                    chrome.runtime.sendMessage({ action: 'fetchImageBoards' }, (response) => {
+                        if (response && response.urls && response.urls.length > 0) {
+                            showMessage(`¡Éxito! ${response.urls.length} imágenes listas.`, 'success');
+                        } else {
+                            showMessage('Conexión lista. (Cargando imágenes en segundo plano...)', 'success');
+                        }
+                    });
+                }
+            });
+        });
+
     } else {
-        // --- Modo Simulación (Para pruebas locales abriendo el HTML en el navegador) ---
-        console.warn('Ejecutándose fuera del contexto de extensión. Cargando modo simulación.');
+        // --- Modo Simulación (Para pruebas abriendo el HTML localmente) ---
+        console.warn('Ejecutándose en modo simulación (fuera de extensión).');
         
-        // Simular estado inicial activo
         let mockEnabled = true;
         updateUI(mockEnabled);
 
@@ -53,5 +113,23 @@ document.addEventListener('DOMContentLoaded', () => {
             mockEnabled = !mockEnabled;
             updateUI(mockEnabled);
         });
+
+        btnSaveSettings.addEventListener('click', () => {
+            showMessage('Simulado: Guardando en navegador...', 'success');
+        });
+    }
+
+    // Auxiliar para mostrar alertas en los ajustes
+    function showMessage(text, type) {
+        settingsMessage.textContent = text;
+        settingsMessage.className = `settings-message ${type}`;
+        
+        // Limpiar mensaje tras 4 segundos
+        setTimeout(() => {
+            if (settingsMessage.textContent === text) {
+                settingsMessage.textContent = '';
+                settingsMessage.className = 'settings-message';
+            }
+        }, 4000);
     }
 });

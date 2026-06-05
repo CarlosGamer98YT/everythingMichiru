@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "header": "referer",
+          "operation": "set",
+          "value": "https://danbooru.donmai.us/"
+        }
+      ]
+    },
+    "condition": {
+      "requestDomains": ["donmai.us"]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "header": "referer",
+          "operation": "set",
+          "value": "https://gelbooru.com/"
+        }
+      ]
+    },
+    "condition": {
+      "requestDomains": ["gelbooru.com"]
+    }
+  }
+]
