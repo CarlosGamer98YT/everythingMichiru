@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const danbooruApiKeyInput = document.getElementById('danbooru-apikey');
     const gelbooruUserIdInput = document.getElementById('gelbooru-userid');
     const gelbooruApiKeyInput = document.getElementById('gelbooru-apikey');
+    const nsfwToggleInput = document.getElementById('nsfw-toggle');
     
     const btnSaveSettings = document.getElementById('btn-save-settings');
     const settingsMessage = document.getElementById('settings-message');
@@ -50,41 +51,45 @@ document.addEventListener('DOMContentLoaded', () => {
             updateUI(result.enabled !== false);
         });
 
-        // Cargar credenciales guardadas
+        // Cargar credenciales guardadas y switch de NSFW
         chrome.storage.local.get([
             'danbooruLogin',
             'danbooruApiKey',
             'gelbooruUserId',
-            'gelbooruApiKey'
+            'gelbooruApiKey',
+            'nsfwEnabled'
         ], (result) => {
             if (result.danbooruLogin) danbooruLoginInput.value = result.danbooruLogin;
             if (result.danbooruApiKey) danbooruApiKeyInput.value = result.danbooruApiKey;
             if (result.gelbooruUserId) gelbooruUserIdInput.value = result.gelbooruUserId;
             if (result.gelbooruApiKey) gelbooruApiKeyInput.value = result.gelbooruApiKey;
+            nsfwToggleInput.checked = !!result.nsfwEnabled;
         });
 
         // Alternar estado ON/OFF al pulsar el botón principal
         btnToggle.addEventListener('click', () => {
             chrome.storage.local.get(['enabled'], (result) => {
-                const newEnabled = result.enabled === false; // Si era false (desactivado), ahora es true (activado)
+                const newEnabled = result.enabled === false; // Si era false, ahora es true
                 chrome.storage.local.set({ enabled: newEnabled }, () => {
                     updateUI(newEnabled);
                 });
             });
         });
 
-        // Guardar la configuración de APIs
+        // Guardar la configuración de APIs y el switch de NSFW
         btnSaveSettings.addEventListener('click', () => {
             const danbooruLogin = danbooruLoginInput.value.trim();
             const danbooruApiKey = danbooruApiKeyInput.value.trim();
             const gelbooruUserId = gelbooruUserIdInput.value.trim();
             const gelbooruApiKey = gelbooruApiKeyInput.value.trim();
+            const nsfwEnabled = nsfwToggleInput.checked;
 
             chrome.storage.local.set({
                 danbooruLogin,
                 danbooruApiKey,
                 gelbooruUserId,
-                gelbooruApiKey
+                gelbooruApiKey,
+                nsfwEnabled
             }, () => {
                 showMessage('¡Configuración guardada!', 'success');
                 

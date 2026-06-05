@@ -17,20 +17,28 @@ async function fetchImageBoardUrls() {
         'danbooruLogin',
         'danbooruApiKey',
         'gelbooruUserId',
-        'gelbooruApiKey'
+        'gelbooruApiKey',
+        'nsfwEnabled'
     ]);
 
     const urls = [];
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    // Determinar los filtros de clasificación basados en el switch de NSFW
+    // rating:g en Danbooru es "General" (SFW). Si NSFW está activo, no filtramos por clasificación.
+    const danbooruRatingFilter = settings.nsfwEnabled ? '' : '+rating:g';
+    // rating:general en Gelbooru es "General" (SFW). Si NSFW está activo, no filtramos por clasificación.
+    const gelbooruRatingFilter = settings.nsfwEnabled ? '' : '+rating:general';
 
     // 1. Consulta a Danbooru
     // Usamos el operador de búsqueda OR (prefijando con ~) para obtener imágenes de ambas etiquetas en una sola consulta
     if (settings.danbooruLogin && settings.danbooruApiKey) {
         try {
             await delay(200); // Pequeño retraso de cortesía
-            console.log('Consultando Danbooru con operador OR (kagemori_michiru / michiru_kagemori)...');
+            console.log(`Consultando Danbooru con operador OR (NSFW: ${!!settings.nsfwEnabled})...`);
+            
             const response = await fetch(
-                `https://danbooru.donmai.us/posts.json?tags=~kagemori_michiru+~michiru_kagemori+rating:g&limit=100&login=${encodeURIComponent(settings.danbooruLogin)}&api_key=${encodeURIComponent(settings.danbooruApiKey)}`,
+                `https://danbooru.donmai.us/posts.json?tags=~kagemori_michiru+~michiru_kagemori${danbooruRatingFilter}&limit=100&login=${encodeURIComponent(settings.danbooruLogin)}&api_key=${encodeURIComponent(settings.danbooruApiKey)}`,
                 { 
                     headers: { 
                         'User-Agent': 'EverythingMichiruExtension/2.0'
@@ -67,9 +75,10 @@ async function fetchImageBoardUrls() {
         for (const tag of gelbooruTags) {
             try {
                 await delay(200); // Esperar 200ms antes de cada petición a Gelbooru para respetar el límite de 10 req/s
-                console.log(`Consultando Gelbooru para etiqueta: ${tag}...`);
+                console.log(`Consultando Gelbooru para etiqueta: ${tag} (NSFW: ${!!settings.nsfwEnabled})...`);
+                
                 const response = await fetch(
-                    `https://gelbooru.com/index.php?page=dapi&s=post&q=index&tags=${tag}+rating:general&json=1&limit=100&user_id=${encodeURIComponent(settings.gelbooruUserId)}&api_key=${encodeURIComponent(settings.gelbooruApiKey)}`
+                    `https://gelbooru.com/index.php?page=dapi&s=post&q=index&tags=${tag}${gelbooruRatingFilter}&json=1&limit=100&user_id=${encodeURIComponent(settings.gelbooruUserId)}&api_key=${encodeURIComponent(settings.gelbooruApiKey)}`
                 );
                 
                 if (response.ok) {
