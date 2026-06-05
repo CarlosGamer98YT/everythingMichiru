@@ -11,8 +11,8 @@
         "48": "icons/logo_48x48.png",
         "128": "icons/logo_128x128.png"
     },
-    "browser_action": {
+    "action": {
         "default_popup": "index.html"
     },
-    "manifest_version": 2
+    "manifest_version": 3
 }
