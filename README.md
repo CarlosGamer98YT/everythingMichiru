@@ -1,3 +1,8 @@
+# IMPORTANT!
+
+If you want images from Gelbooru and Danbooru to load, you'll need to obtain a username/user ID and an API key for this to work.
+Otherwise, you'll just end up with some more generic images.
+
 # Everything Michiru
 
 A browser extension that replaces every image with pictures of Michiru Kagemori!
