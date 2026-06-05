@@ -1,0 +1,18 @@
+{
+    "name": "Everything Michiru",
+    "version": "1.0",
+    "description": "Replaces every image with pictures of Michiru Kagemori!",
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+    }],
+    "icons": {
+        "16": "icons/logo_16x16.png",
+        "48": "icons/logo_48x48.png",
+        "128": "icons/logo_128x128.png"
+    },
+    "browser_action": {
+        "default_popup": "index.html"
+    },
+    "manifest_version": 2
+}
