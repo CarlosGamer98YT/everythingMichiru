@@ -9,9 +9,18 @@
     <title>Everything Michiru</title>
 </head>
 <body>
-    <div class="flex">
-        <img src="./icons/logo_128x128.png" alt="logo..." class="logo">
-        <h1>Everything Michiru</h1>
+    <div class="header-container">
+        <div class="flex-left">
+            <img src="./icons/logo_128x128.png" alt="logo..." class="logo">
+            <h1>Everything Michiru</h1>
+        </div>
+        <div class="nsfw-header-container">
+            <span id="nsfw-label" class="nsfw-text-label sfw">SFW</span>
+            <label class="switch">
+                <input type="checkbox" id="nsfw-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
     </div>
     <p class="text">Esta extensión reemplaza todas las imágenes de Internet por fotos de Michiru Kagemori. ¡Puedes activarla o desactivarla en cualquier momento!</p>
     
@@ -24,6 +33,14 @@
     </div>
 
     <button id="btn-toggle" class="btn">...</button>
+
+    <div class="switch-group main-switch">
+        <span class="switch-label">Usar imágenes de APIs (Gel/Dan)</span>
+        <label class="switch">
+            <input type="checkbox" id="apis-toggle">
+            <span class="slider round"></span>
+        </label>
+    </div>
 
     <div class="settings-toggle" id="settings-toggle">
         <span>⚙️ Ajustes de API</span>
@@ -47,13 +64,6 @@
         <div class="input-group">
             <label>Gelbooru API Key</label>
             <input type="password" id="gelbooru-apikey" placeholder="API Key">
-        </div>
-        <div class="switch-group">
-            <span class="switch-label">Permitir contenido NSFW (18+)</span>
-            <label class="switch">
-                <input type="checkbox" id="nsfw-toggle">
-                <span class="slider round"></span>
-            </label>
         </div>
         <button id="btn-save-settings" class="btn btn-save">Guardar configuración</button>
         <p id="settings-message" class="settings-message"></p>

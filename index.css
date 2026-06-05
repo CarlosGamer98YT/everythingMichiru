@@ -4,25 +4,31 @@ html, body {
     background: linear-gradient(135deg, #0f0724 0%, #200d3d 100%);
     color: #f1ecfa;
     font-family: 'Rubik', sans-serif;
-    width: 320px;
+    width: 350px;
     overflow: hidden;
 }
 
 body {
-    padding: 24px 20px;
+    padding: 20px 16px;
     box-sizing: border-box;
 }
 
-.flex {
+.header-container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
 }
 
+.flex-left {
+    display: flex;
+    align-items: center;
+}
+
 .logo {
-    height: 48px;
+    height: 44px;
     width: auto;
-    margin-right: 14px;
+    margin-right: 10px;
     filter: drop-shadow(0 0 8px rgba(138, 75, 243, 0.6));
     transition: transform 0.3s ease;
 }
@@ -32,13 +38,14 @@ body {
 }
 
 h1 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 800;
     margin: 0;
     background: linear-gradient(90deg, #ff79c6 0%, #bd93f9 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
 .text {
@@ -307,10 +314,36 @@ h1 {
     transition: .3s ease;
 }
 
-input:checked + .slider {
-    background-color: #ff5555;
+/* API switch checked state (Green when enabled) */
+#apis-toggle:checked + .slider {
+    background-color: rgba(80, 250, 123, 0.2);
+    border-color: #50fa7b;
+    box-shadow: 0 0 10px rgba(80, 250, 123, 0.4);
+}
+
+#apis-toggle:checked + .slider:before {
+    background-color: #50fa7b;
+}
+
+/* NSFW switch unchecked state (Green SFW by default) */
+#nsfw-toggle + .slider {
+    background-color: rgba(80, 250, 123, 0.15);
+    border-color: rgba(80, 250, 123, 0.4);
+}
+
+#nsfw-toggle + .slider:before {
+    background-color: #50fa7b;
+}
+
+/* NSFW switch checked state (Red NSFW when enabled) */
+#nsfw-toggle:checked + .slider {
+    background-color: rgba(255, 85, 85, 0.2);
     border-color: #ff5555;
     box-shadow: 0 0 10px rgba(255, 85, 85, 0.4);
+}
+
+#nsfw-toggle:checked + .slider:before {
+    background-color: #ff5555;
 }
 
 input:checked + .slider:before {
@@ -323,4 +356,35 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+/* Estilo específico para el switch principal de APIs fuera del acordeón */
+.main-switch {
+    margin-top: 18px;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Contenedor del switch NSFW en la esquina superior derecha del header */
+.nsfw-header-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nsfw-text-label {
+    font-family: 'Rubik', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.nsfw-text-label.sfw {
+    color: #50fa7b; /* Verde SFW */
+}
+
+.nsfw-text-label.nsfw {
+    color: #ff5555; /* Rojo NSFW */
 }

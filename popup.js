@@ -3,8 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnToggle = document.getElementById('btn-toggle');
     const statusDot = document.getElementById('status-dot');
     const statusText = document.getElementById('status-text');
+    const apisToggleInput = document.getElementById('apis-toggle');
 
-    // Elementos de Configuración de API
+    // Elementos del switch flotante NSFW en la cabecera
+    const nsfwToggleInput = document.getElementById('nsfw-toggle');
+    const nsfwLabel = document.getElementById('nsfw-label');
+
+    // Elementos de Configuración de API (en el panel colapsable)
     const settingsToggle = document.getElementById('settings-toggle');
     const settingsContent = document.getElementById('settings-content');
     const settingsArrow = document.getElementById('settings-arrow');
@@ -13,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const danbooruApiKeyInput = document.getElementById('danbooru-apikey');
     const gelbooruUserIdInput = document.getElementById('gelbooru-userid');
     const gelbooruApiKeyInput = document.getElementById('gelbooru-apikey');
-    const nsfwToggleInput = document.getElementById('nsfw-toggle');
     
     const btnSaveSettings = document.getElementById('btn-save-settings');
     const settingsMessage = document.getElementById('settings-message');
@@ -38,6 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Función para actualizar la etiqueta de texto y color de NSFW
+    const updateNsfwUI = (nsfwEnabled) => {
+        nsfwToggleInput.checked = !!nsfwEnabled;
+        if (nsfwEnabled) {
+            nsfwLabel.textContent = 'NSFW';
+            nsfwLabel.className = 'nsfw-text-label nsfw';
+        } else {
+            nsfwLabel.textContent = 'SFW';
+            nsfwLabel.className = 'nsfw-text-label sfw';
+        }
+    };
+
     // --- 1. Alternar visualización de la sección de Ajustes ---
     settingsToggle.addEventListener('click', () => {
         const isOpen = settingsContent.classList.toggle('open');
@@ -51,19 +67,22 @@ document.addEventListener('DOMContentLoaded', () => {
             updateUI(result.enabled !== false);
         });
 
-        // Cargar credenciales guardadas y switch de NSFW
+        // Cargar credenciales guardadas y switches
         chrome.storage.local.get([
             'danbooruLogin',
             'danbooruApiKey',
             'gelbooruUserId',
             'gelbooruApiKey',
+            'apisEnabled',
             'nsfwEnabled'
         ], (result) => {
             if (result.danbooruLogin) danbooruLoginInput.value = result.danbooruLogin;
             if (result.danbooruApiKey) danbooruApiKeyInput.value = result.danbooruApiKey;
             if (result.gelbooruUserId) gelbooruUserIdInput.value = result.gelbooruUserId;
             if (result.gelbooruApiKey) gelbooruApiKeyInput.value = result.gelbooruApiKey;
-            nsfwToggleInput.checked = !!result.nsfwEnabled;
+            
+            apisToggleInput.checked = result.apisEnabled !== false; // Activo por defecto
+            updateNsfwUI(result.nsfwEnabled);
         });
 
         // Alternar estado ON/OFF al pulsar el botón principal
@@ -76,25 +95,66 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Guardar la configuración de APIs y el switch de NSFW
+        // Alternar el switch principal de APIs (Guardar y aplicar inmediatamente)
+        apisToggleInput.addEventListener('change', () => {
+            const newApisEnabled = apisToggleInput.checked;
+            chrome.storage.local.set({ apisEnabled: newApisEnabled }, () => {
+                // Si se activa, y hay credenciales, solicitar refrescar caché de imágenes inmediatamente
+                if (newApisEnabled) {
+                    chrome.storage.local.get([
+                        'danbooruLogin',
+                        'danbooruApiKey',
+                        'gelbooruUserId',
+                        'gelbooruApiKey'
+                    ], (result) => {
+                        if ((result.danbooruLogin && result.danbooruApiKey) || (result.gelbooruUserId && result.gelbooruApiKey)) {
+                            chrome.runtime.sendMessage({ action: 'fetchImageBoards' });
+                        }
+                    });
+                }
+            });
+        });
+
+        // Alternar el switch flotante de NSFW (Guardar y aplicar inmediatamente)
+        nsfwToggleInput.addEventListener('change', () => {
+            const newNsfwEnabled = nsfwToggleInput.checked;
+            updateNsfwUI(newNsfwEnabled);
+            
+            chrome.storage.local.set({ nsfwEnabled: newNsfwEnabled }, () => {
+                // Si el switch principal de APIs está activo, y hay credenciales, solicitar refrescar caché
+                chrome.storage.local.get([
+                    'apisEnabled',
+                    'danbooruLogin',
+                    'danbooruApiKey',
+                    'gelbooruUserId',
+                    'gelbooruApiKey'
+                ], (result) => {
+                    const apisEnabled = result.apisEnabled !== false;
+                    if (apisEnabled && ((result.danbooruLogin && result.danbooruApiKey) || (result.gelbooruUserId && result.gelbooruApiKey))) {
+                        chrome.runtime.sendMessage({ action: 'fetchImageBoards' });
+                    }
+                });
+            });
+        });
+
+        // Guardar la configuración de APIs del panel colapsable
         btnSaveSettings.addEventListener('click', () => {
             const danbooruLogin = danbooruLoginInput.value.trim();
             const danbooruApiKey = danbooruApiKeyInput.value.trim();
             const gelbooruUserId = gelbooruUserIdInput.value.trim();
             const gelbooruApiKey = gelbooruApiKeyInput.value.trim();
-            const nsfwEnabled = nsfwToggleInput.checked;
+            const apisEnabled = apisToggleInput.checked;
 
             chrome.storage.local.set({
                 danbooruLogin,
                 danbooruApiKey,
                 gelbooruUserId,
-                gelbooruApiKey,
-                nsfwEnabled
+                gelbooruApiKey
             }, () => {
                 showMessage('¡Configuración guardada!', 'success');
                 
-                // Si hay credenciales, solicitar al background que refresque los enlaces inmediatamente
-                if ((danbooruLogin && danbooruApiKey) || (gelbooruUserId && gelbooruApiKey)) {
+                // Si las APIs están habilitadas y hay credenciales, solicitar al background que refresque
+                if (apisEnabled && ((danbooruLogin && danbooruApiKey) || (gelbooruUserId && gelbooruApiKey))) {
                     showMessage('¡Guardado! Consultando APIs...', 'success');
                     chrome.runtime.sendMessage({ action: 'fetchImageBoards' }, (response) => {
                         if (response && response.urls && response.urls.length > 0) {
@@ -112,11 +172,24 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn('Ejecutándose en modo simulación (fuera de extensión).');
         
         let mockEnabled = true;
+        let mockNsfwEnabled = false;
+        
         updateUI(mockEnabled);
+        updateNsfwUI(mockNsfwEnabled);
 
         btnToggle.addEventListener('click', () => {
             mockEnabled = !mockEnabled;
             updateUI(mockEnabled);
+        });
+
+        apisToggleInput.addEventListener('change', () => {
+            console.log('Simulado: Cambiado switch de APIs a:', apisToggleInput.checked);
+        });
+
+        nsfwToggleInput.addEventListener('change', () => {
+            mockNsfwEnabled = nsfwToggleInput.checked;
+            updateNsfwUI(mockNsfwEnabled);
+            console.log('Simulado: Cambiado switch de NSFW a:', mockNsfwEnabled);
         });
 
         btnSaveSettings.addEventListener('click', () => {

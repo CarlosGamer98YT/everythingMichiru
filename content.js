@@ -1,4 +1,5 @@
 let isEnabled = true;
+let apisEnabled = true;
 let dynamicMichiruImages = [];
 
 // Lista curada estática de imágenes oficiales y GIFs (como fallback inmediato y para tener variedad oficial)
@@ -29,9 +30,9 @@ const staticMichiruImages = [
     'https://static.wikia.nocookie.net/brand-new-animal/images/0/0e/7AA3FE60-E266-47BF-8111-B874B64B38D2.jpeg/revision/latest'
 ];
 
-// Obtener la lista combinada (estática + dinámica de APIs si existen)
+// Obtener la lista combinada (estática + dinámica de APIs si están habilitadas y existen)
 const getCombinedImagesList = () => {
-    return [...staticMichiruImages, ...dynamicMichiruImages];
+    return apisEnabled ? [...staticMichiruImages, ...dynamicMichiruImages] : staticMichiruImages;
 };
 
 const replace = () => {
@@ -91,10 +92,10 @@ const restore = () => {
     }
 };
 
-// 1. Obtener estado inicial y lista de imágenes de ImageBoards en la caché
-chrome.storage.local.get(['enabled', 'imageBoardUrls'], (result) => {
-    // Si 'enabled' no está definido aún en el almacenamiento, por defecto es true (activo)
+// 1. Obtener estado inicial e imágenes de ImageBoards en la caché
+chrome.storage.local.get(['enabled', 'apisEnabled', 'imageBoardUrls'], (result) => {
     isEnabled = result.enabled !== false;
+    apisEnabled = result.apisEnabled !== false;
     dynamicMichiruImages = result.imageBoardUrls || [];
     if (isEnabled) {
         replace();
@@ -111,7 +112,7 @@ window.setInterval(() => {
 // 3. Escuchar cambios de estado e imágenes en tiempo real
 chrome.storage.onChanged.addListener((changes, namespace) => {
     if (namespace === 'local') {
-        // Cambios de estado Activo/Inactivo
+        // Cambios de estado Activo/Inactivo de la extensión completa
         if ('enabled' in changes) {
             isEnabled = changes.enabled.newValue;
             if (isEnabled) {
@@ -121,10 +122,36 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
             }
         }
         
+        // Cambios en la activación de APIs
+        if ('apisEnabled' in changes) {
+            apisEnabled = changes.apisEnabled.newValue !== false;
+            if (isEnabled) {
+                if (!apisEnabled) {
+                    // Si se acaban de desactivar las APIs, barremos y reemplazamos instantáneamente
+                    // las imágenes activas de Gel/Dan por imágenes estáticas oficiales de Michiru
+                    const imgs = document.getElementsByTagName('img');
+                    for (const img of imgs) {
+                        if (img.dataset.michiruSrc && 
+                            (img.dataset.michiruSrc.includes('donmai.us') || img.dataset.michiruSrc.includes('gelbooru.com'))) {
+                            
+                            const randomIndex = Math.floor(Math.random() * staticMichiruImages.length);
+                            const chosenStatic = staticMichiruImages[randomIndex];
+                            
+                            img.dataset.michiruSrc = chosenStatic;
+                            img.src = chosenStatic;
+                        }
+                    }
+                } else {
+                    // Si se volvieron a activar, hacemos un replace para reintroducir variedad
+                    replace();
+                }
+            }
+        }
+        
         // Cambios en la lista de imágenes (cuando se cargan nuevas APIs)
         if ('imageBoardUrls' in changes) {
             dynamicMichiruImages = changes.imageBoardUrls.newValue || [];
-            if (isEnabled) {
+            if (isEnabled && apisEnabled) {
                 replace();
             }
         }
