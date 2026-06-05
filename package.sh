@@ -11,7 +11,7 @@ fi
 echo "Empaquetando la extensión 'Everything Michiru'..."
 
 # Comprimir solo los archivos necesarios de la extensión
-zip -r "$OUTPUT" manifest.json content.js index.html index.css icons/ -x "*.DS_Store*"
+zip -r "$OUTPUT" manifest.json content.js popup.js index.html index.css icons/ -x "*.DS_Store*"
 
 if [ $? -eq 0 ]; then
   echo "--------------------------------------------------"

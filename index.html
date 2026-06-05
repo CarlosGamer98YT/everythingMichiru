@@ -1,17 +1,33 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;800&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;800&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="index.css">
+    <title>Everything Michiru</title>
 </head>
 <body>
     <div class="flex">
         <img src="./icons/logo_128x128.png" alt="logo..." class="logo">
         <h1>Everything Michiru</h1>
     </div>
-    <p class="text">This extension exchanges every picture on the internet for a picture of Michiru Kagemori. But don't worry, you can turn it on and off. Have fun using!</p>
-    <button id="btn-toggle" class="btn">Toggle ON/OFF</button>
-    <p class="bottom">Made with love by Yuwukii</p>
+    <p class="text">Esta extensión reemplaza todas las imágenes de Internet por fotos de Michiru Kagemori. ¡Puedes activarla o desactivarla en cualquier momento!</p>
+    
+    <div class="status-container">
+        <span class="status-label">Estado</span>
+        <div class="status-value">
+            <span id="status-dot" class="status-dot"></span>
+            <span id="status-text">Cargando...</span>
+        </div>
+    </div>
+
+    <button id="btn-toggle" class="btn">...</button>
+    
+    <p class="bottom">Hecho con ❤️ por Yuwukii</p>
+    <p class="credits">Modificado por CarlosGamer98YT</p>
+
+    <script src="popup.js"></script>
 </body>
 </html>

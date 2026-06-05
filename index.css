@@ -1,41 +1,153 @@
 html, body {
     padding: 0;
     margin: 0;
-    background-color: #20123a;
-    color: #ffffff;
+    background: linear-gradient(135deg, #0f0724 0%, #200d3d 100%);
+    color: #f1ecfa;
     font-family: 'Rubik', sans-serif;
+    width: 320px;
+    overflow: hidden;
 }
 
 body {
-    padding-left: 20px;
-    padding-right: 20px;
-    max-width: 400px;
+    padding: 24px 20px;
+    box-sizing: border-box;
 }
 
 .flex {
-    display:  flex;
+    display: flex;
     align-items: center;
+    margin-bottom: 16px;
 }
 
 .logo {
     height: 48px;
     width: auto;
-    margin-right: 20px;
+    margin-right: 14px;
+    filter: drop-shadow(0 0 8px rgba(138, 75, 243, 0.6));
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: rotate(10deg) scale(1.1);
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(90deg, #ff79c6 0%, #bd93f9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
 }
 
 .text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #a89bbd;
+    margin-bottom: 20px;
     text-align: justify;
 }
 
+/* Status indicator container */
+.status-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.status-label {
+    color: #a89bbd;
+}
+
+.status-value {
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+    display: inline-block;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.status-dot.active {
+    background-color: #50fa7b;
+    box-shadow: 0 0 10px #50fa7b;
+}
+
+.status-dot.inactive {
+    background-color: #ff5555;
+    box-shadow: 0 0 10px #ff5555;
+}
+
+/* Premium toggle button */
 .btn {
-    margin-top: 20px;
-    padding: 8px;
-    font-size: large;
+    display: block;
     width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 800;
+    font-family: 'Rubik', sans-serif;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-active {
+    background: linear-gradient(135deg, #ff5555 0%, #ff3333 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(255, 85, 85, 0.3);
+}
+
+.btn-active:hover {
+    background: linear-gradient(135deg, #ff6666 0%, #ff4444 100%);
+    box-shadow: 0 6px 20px rgba(255, 85, 85, 0.5);
+    transform: translateY(-1px);
+}
+
+.btn-inactive {
+    background: linear-gradient(135deg, #50fa7b 0%, #8be9fd 100%);
+    color: #0f0724;
+    box-shadow: 0 4px 15px rgba(80, 250, 123, 0.3);
+}
+
+.btn-inactive:hover {
+    background: linear-gradient(135deg, #62ff8d 0%, #9effff 100%);
+    box-shadow: 0 6px 20px rgba(80, 250, 123, 0.5);
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .bottom {
+    margin-top: 24px;
+    font-size: 11px;
+    color: #6272a4;
     text-align: center;
+}
+
+.credits {
+    margin-top: 4px;
+    font-size: 10px;
+    color: #bd93f9;
+    text-align: center;
+    font-weight: 800;
 }
