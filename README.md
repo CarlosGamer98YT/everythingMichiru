@@ -1,39 +1,39 @@
-# Everything Michiru 🦝
+# Everything Michiru
 
 A browser extension that replaces every image with pictures of Michiru Kagemori!
 
-*This is a fork from [girltwinktaako/everythingMichiru](https://github.com/girltwinktaako/everythingMichiru).*
+*This is a fork of [girltwinktaako/everythingMichiru](https://github.com/girltwinktaako/everythingMichiru).*
 
 ---
 
-## 🚀 Cómo instalar la extensión (Para Usuarios)
+## 🚀 How to Install the Extension (For Users)
 
-Para que otros usuarios puedan instalar y usar esta extensión de forma rápida y sencilla, deben seguir estos pasos:
+To allow other users to install and use this extension quickly and easily, they should follow these steps:
 
-### Paso 1: Descargar y descomprimir la extensión
-1. Descarga el código de la extensión en formato **ZIP** (desde el botón verde "Code" -> "Download ZIP" en GitHub, o pídele al creador el archivo `everythingMichiru.zip`).
-2. Descomprime el archivo `.zip` en una carpeta de tu ordenador (por ejemplo, en el Escritorio).
+### Step 1: Download and unzip the extension
+1. Download the extension code in **ZIP** format (from the green “Code” -> “Download ZIP” button on GitHub, or ask the creator for the `everythingMichiru.zip` file).
+2. Unzip the `.zip` file into a folder on your computer (for example, on your Desktop).
 
-### Paso 2: Cargar la extensión en el navegador
-1. Abre tu navegador basado en Chromium (como **Brave**, **Google Chrome**, **Edge** o **Opera**).
-2. En la barra de direcciones, escribe la ruta de extensiones del navegador:
+### Step 2: Load the extension into your browser
+1. Open your Chromium-based browser (such as **Brave**, **Google Chrome**, **Edge**, or **Opera**).
+2. In the address bar, type the browser’s extensions path:
    * **Brave:** `brave://extensions/`
    * **Chrome:** `chrome://extensions/`
-3. En la esquina superior derecha de la página de extensiones, **activa** el interruptor de **Modo de desarrollador** (Developer mode).
-4. Haz clic en el botón **Cargar descomprimida** (Load unpacked) que aparecerá en la parte superior izquierda.
-5. Selecciona la carpeta que acabas de descomprimir (la que contiene el archivo `manifest.json`).
+3. In the top-right corner of the extensions page, **toggle on** the **Developer mode** switch.
+4. Click the **Load unpacked** button that appears in the top-left corner.
+5. Select the folder you just extracted (the one containing the `manifest.json` file).
 
-¡Y listo! La extensión estará activa inmediatamente en tu navegador.
+And that's it! The extension will be active immediately in your browser.
 
 ---
 
-## 🛠️ Cómo empaquetar la extensión (Para Desarrolladores)
+## 🛠️ How to package the extension (For Developers)
 
-Si eres el creador y quieres compilar/empaquetar la extensión en un solo archivo `.zip` limpio (sin archivos de desarrollo como `.git` o scripts) para enviárselo a tus amigos o usuarios:
+If you are the creator and want to compile/package the extension into a single clean `.zip` file (without development files like `.git` or scripts) to send to your friends or users:
 
-1. Abre la terminal en la carpeta del proyecto.
-2. Ejecuta el script de empaquetado:
+1. Open the terminal in the project folder.
+2. Run the packaging script:
    ```bash
    ./package.sh
    ```
-3. Se generará un archivo llamado `everythingMichiru.zip` listo para enviar.
+3. A file named `everythingMichiru.zip` will be generated, ready to send.
