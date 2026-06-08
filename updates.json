@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "everything-michiru@carlosgamer98yt.com": {
+      "updates": [
+        {
+          "version": "1.0.2",
+          "update_link": "https://github.com/CarlosGamer98YT/everythingMichiru/releases/latest/download/everythingMichiru.xpi"
+        }
+      ]
+    }
+  }
+}
