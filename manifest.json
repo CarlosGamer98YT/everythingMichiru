@@ -1,6 +1,6 @@
 {
     "name": "__MSG_extName__",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "__MSG_extDesc__",
     "default_locale": "en",
     "content_scripts": [{
@@ -27,7 +27,7 @@
     "browser_specific_settings": {
         "gecko": {
             "id": "everything-michiru@carlosgamer98yt.com",
-            "strict_min_version": "120.0",
+            "strict_min_version": "142.0",
             "update_url": "https://raw.githubusercontent.com/CarlosGamer98YT/everythingMichiru/main/updates.json",
             "data_collection_permissions": {
                 "required": ["none"]
