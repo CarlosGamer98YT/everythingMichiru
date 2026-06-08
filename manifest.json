@@ -28,7 +28,10 @@
         "gecko": {
             "id": "everything-michiru@carlosgamer98yt.com",
             "strict_min_version": "109.0",
-            "update_url": "https://raw.githubusercontent.com/CarlosGamer98YT/everythingMichiru/main/updates.json"
+            "update_url": "https://raw.githubusercontent.com/CarlosGamer98YT/everythingMichiru/main/updates.json",
+            "data_collection_permissions": {
+                "required": ["none"]
+            }
         }
     },
     "host_permissions": [
