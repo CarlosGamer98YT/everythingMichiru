@@ -1,5 +1,8 @@
+// Compatibilidad cross-browser (Firefox usa 'browser', Chrome usa 'chrome')
+const extAPI = typeof browser !== 'undefined' ? browser : chrome;
+
 // Escuchar mensajes desde el popup o el content script
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+extAPI.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'fetchImageBoards') {
         fetchImageBoardUrls()
             .then(urls => sendResponse({ urls }))
@@ -13,7 +16,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 // Función para consultar las APIs de Danbooru y Gelbooru con las credenciales del usuario
 async function fetchImageBoardUrls() {
-    const settings = await chrome.storage.local.get([
+    const settings = await extAPI.storage.local.get([
         'danbooruLogin',
         'danbooruApiKey',
         'gelbooruUserId',
@@ -107,7 +110,7 @@ async function fetchImageBoardUrls() {
 
     // Guardar en almacenamiento local para la caché
     if (uniqueUrls.length > 0) {
-        await chrome.storage.local.set({
+        await extAPI.storage.local.set({
             imageBoardUrls: uniqueUrls,
             imageBoardUrlsTimestamp: Date.now()
         });
